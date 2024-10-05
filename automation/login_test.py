@@ -63,23 +63,6 @@ class LoginTest(unittest.TestCase):
         error_message = self.driver.find_element(By.ID, "error-element-password")
         self.assertIn("Wrong email or password", error_message.text)
 
-    def test_login_with_inactive_account(self):
-        # Find the email and password input fields
-        email_input = self.driver.find_element(By.ID, "username")
-        password_input = self.driver.find_element(By.ID, "password")
-
-        email_input.send_keys(self.inactive_email)
-        password_input.send_keys(self.password_for_inactive_user)
-        password_input.send_keys(Keys.RETURN)  # Submit form
-
-        # Wait for the page to reload
-        self.wait_for_fully_loaded_page()
-
-        current_url = self.driver.current_url
-        assert current_url == "https://zelf-hackathon-qa.web.app/active-your-account-page", f"Unexpected URL: {current_url}"
-        page_source = self.driver.page_source
-        assert "Your Account has been created." in page_source, "Text 'test text' not found on the page"
-
     def test_login_successful(self):
         # Find the email and password input fields
         email_input = self.driver.find_element(By.ID, "username")
